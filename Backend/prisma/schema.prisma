@@ -1,0 +1,218 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  KADER
+  OPERATOR
+}
+
+enum ReportStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum CollectionTaskStatus {
+  ACTIVE
+  COMPLETED
+  EXPIRED
+  REVOKED
+}
+
+enum EducationStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum ActorType {
+  KADER
+  OPERATOR
+  TPS
+  SYSTEM
+}
+
+model User {
+  id           String   @id @default(uuid()) @db.Uuid
+  name         String
+  username     String   @unique
+  passwordHash String   @map("password_hash")
+  role         UserRole
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  refreshTokens RefreshToken[]
+  reportGroups  ReportGroup[]
+  education     EducationContent[]
+  histories     ReportStatusHistory[]
+  activityLogs  ActivityLog[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  tokenHash String    @unique @map("token_hash")
+  expiresAt DateTime  @map("expires_at")
+  revokedAt DateTime? @map("revoked_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
+
+model TpsContact {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  phoneNumber String   @unique @map("phone_number")
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  collectionTasks CollectionTask[]
+
+  @@map("tps_contacts")
+}
+
+model WastePoint {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  address   String
+  latitude  Decimal? @db.Decimal(10, 7)
+  longitude Decimal? @db.Decimal(10, 7)
+  photoUrl  String?  @map("photo_url")
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  reports Report[]
+
+  @@map("waste_points")
+}
+
+model ReportGroup {
+  id          String   @id @default(uuid()) @db.Uuid
+  groupCode   String   @unique @map("group_code")
+  createdById String   @map("created_by_id") @db.Uuid
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  createdBy      User            @relation(fields: [createdById], references: [id])
+  reports        Report[]
+  collectionTask CollectionTask?
+
+  @@map("report_groups")
+}
+
+model Report {
+  id           String       @id @default(uuid()) @db.Uuid
+  reportCode   String       @unique @map("report_code")
+  groupId      String       @map("group_id") @db.Uuid
+  wastePointId String       @map("waste_point_id") @db.Uuid
+  category     String?
+  description  String?
+  status       ReportStatus @default(PENDING)
+  createdAt    DateTime     @default(now()) @map("created_at")
+  updatedAt    DateTime     @updatedAt @map("updated_at")
+
+  group      ReportGroup           @relation(fields: [groupId], references: [id])
+  wastePoint WastePoint            @relation(fields: [wastePointId], references: [id])
+  photos     ReportPhoto[]
+  histories  ReportStatusHistory[]
+
+  @@index([groupId])
+  @@index([wastePointId])
+  @@index([status])
+  @@map("reports")
+}
+
+model CollectionTask {
+  id           String               @id @default(uuid()) @db.Uuid
+  groupId      String               @unique @map("group_id") @db.Uuid
+  tpsContactId String               @map("tps_contact_id") @db.Uuid
+  tokenHash    String               @unique @map("token_hash")
+  status       CollectionTaskStatus @default(ACTIVE)
+  openedAt     DateTime?            @map("opened_at")
+  expiresAt    DateTime             @map("expires_at")
+  completedAt  DateTime?            @map("completed_at")
+  revokedAt    DateTime?            @map("revoked_at")
+  createdAt    DateTime             @default(now()) @map("created_at")
+
+  group      ReportGroup @relation(fields: [groupId], references: [id])
+  tpsContact TpsContact  @relation(fields: [tpsContactId], references: [id])
+
+  @@index([status, expiresAt])
+  @@map("collection_tasks")
+}
+
+model ReportStatusHistory {
+  id          String        @id @default(uuid()) @db.Uuid
+  reportId    String        @map("report_id") @db.Uuid
+  changedById String?       @map("changed_by_id") @db.Uuid
+  actorType   ActorType     @map("actor_type")
+  oldStatus   ReportStatus? @map("old_status")
+  newStatus   ReportStatus  @map("new_status")
+  note        String?
+  createdAt   DateTime      @default(now()) @map("created_at")
+
+  report    Report @relation(fields: [reportId], references: [id])
+  changedBy User?  @relation(fields: [changedById], references: [id])
+
+  @@index([reportId, createdAt])
+  @@map("report_status_histories")
+}
+
+model ReportPhoto {
+  id         String   @id @default(uuid()) @db.Uuid
+  reportId   String   @map("report_id") @db.Uuid
+  storageKey String   @map("storage_key")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  report Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@map("report_photos")
+}
+
+model EducationContent {
+  id          String          @id @default(uuid()) @db.Uuid
+  createdById String          @map("created_by_id") @db.Uuid
+  title       String
+  slug        String          @unique
+  content     String
+  category    String?
+  imageUrl    String?         @map("image_url")
+  status      EducationStatus @default(DRAFT)
+  createdAt   DateTime        @default(now()) @map("created_at")
+  updatedAt   DateTime        @updatedAt @map("updated_at")
+
+  createdBy User @relation(fields: [createdById], references: [id])
+
+  @@map("education_contents")
+}
+
+model ActivityLog {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String?   @map("user_id") @db.Uuid
+  actorType  ActorType @map("actor_type")
+  action     String
+  entityType String?   @map("entity_type")
+  entityId   String?   @map("entity_id")
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id])
+
+  @@index([createdAt])
+  @@map("activity_logs")
+}
