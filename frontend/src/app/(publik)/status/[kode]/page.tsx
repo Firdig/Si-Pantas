@@ -87,7 +87,7 @@ export default async function DetailStatusPage({
                 {report.reportCode} · {report.wastePoint.name} ·{" "}
                 {report.wastePoint.rt}
               </p>
-              <p className="mt-1 text-[14px] text-ink-subtle">
+              <p className="mt-1 text-meta text-ink-subtle">
                 Diperbarui {formatDayTimeWib(report.updatedAt, MOCK_NOW)}
               </p>
             </div>

@@ -24,7 +24,7 @@ export function ReportCard({ report }: ReportCardProps) {
           <div className="min-w-0 flex-1">
             <p className="text-caption text-ink-subtle">{report.pointLabel}</p>
 
-            <h3 className="mt-1 text-[19px] font-semibold leading-snug text-ink">
+            <h3 className="mt-1 text-item-title font-semibold leading-snug text-ink">
               {report.title}
             </h3>
 
@@ -34,7 +34,7 @@ export function ReportCard({ report }: ReportCardProps) {
               </p>
             ) : null}
 
-            <p className="mt-2 text-[14px] text-ink-subtle">
+            <p className="mt-2 text-meta text-ink-subtle">
               {report.reportCode} · Diperbarui {report.updatedLabel}
             </p>
           </div>

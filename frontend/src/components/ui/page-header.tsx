@@ -9,7 +9,7 @@ type PageHeaderProps = {
 export function PageHeader({ title, description, className }: PageHeaderProps) {
   return (
     <div className={cn("max-w-[720px]", className)}>
-      <h1 className="text-[30px] font-bold leading-[1.2] tracking-tight text-ink sm:text-[32px]">
+      <h1 className="text-page-title font-bold leading-[1.2] tracking-tight text-ink">
         {title}
       </h1>
       {description ? (

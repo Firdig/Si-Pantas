@@ -53,7 +53,7 @@ export default async function DetailEdukasiPage({
           ]}
         />
 
-        <h1 className="mt-4 text-[30px] font-bold leading-[1.2] tracking-tight text-ink sm:text-[34px]">
+        <h1 className="mt-4 text-page-title font-bold leading-[1.2] tracking-tight text-ink sm:text-[30px]">
           {artikel.title}
         </h1>
 

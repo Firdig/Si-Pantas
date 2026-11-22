@@ -20,7 +20,7 @@ export function SummaryCard() {
             >
               <dd
                 className={[
-                  "text-[40px] font-bold leading-none",
+                  "text-[30px] font-bold leading-none",
                   stat.tone === "brand" ? "text-brand" : "text-info",
                 ].join(" ")}
               >
@@ -32,7 +32,7 @@ export function SummaryCard() {
         </dl>
 
         <div className="mt-4 rounded-xl bg-brand-soft px-4 py-4">
-          <h3 className="text-[17px] font-semibold text-brand-dark">
+          <h3 className="text-[16px] font-semibold text-brand-dark">
             {ringkasan.panduan.title}
           </h3>
           <ol className="mt-2 space-y-1 text-caption text-ink-muted">

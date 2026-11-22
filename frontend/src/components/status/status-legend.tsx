@@ -46,7 +46,7 @@ export function StatusLegend() {
                 <p className="text-caption font-semibold text-ink">
                   {display.label}
                 </p>
-                <p className="text-[14px] leading-snug text-ink-muted">
+                <p className="text-meta leading-snug text-ink-muted">
                   {display.description}
                 </p>
               </div>

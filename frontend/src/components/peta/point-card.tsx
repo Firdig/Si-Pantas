@@ -29,7 +29,7 @@ export function PointCard({
         )}
       >
         <div className="flex items-start justify-between gap-3">
-          <h3 className="text-[19px] font-semibold leading-snug text-ink">
+          <h3 className="text-item-title font-semibold leading-snug text-ink">
             {point.name} · {point.rt}
           </h3>
           <Badge tone={status.tone}>{status.label}</Badge>

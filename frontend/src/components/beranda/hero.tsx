@@ -7,16 +7,16 @@ export function Hero() {
     <div className="max-w-[700px]">
       <Badge tone="success">{hero.badge}</Badge>
 
-      <h1 className="mt-4 text-[34px] font-bold leading-[1.15] tracking-tight text-ink sm:text-[38px] lg:text-[44px]">
+      <h1 className="mt-4 text-[28px] font-bold leading-[1.18] tracking-tight text-ink sm:text-[32px] lg:text-hero">
         {hero.title}
       </h1>
 
-      <p className="mt-4 max-w-[640px] text-body leading-relaxed text-ink-muted">
+      <p className="mt-3 max-w-[640px] text-body leading-relaxed text-ink-muted">
         {hero.description}
       </p>
 
       {/* ITERASI 2: satu ajakan saja — memantau status laporan. */}
-      <div className="mt-6">
+      <div className="mt-5">
         <ButtonLink href={hero.action.href} variant="outline">
           {hero.action.label}
         </ButtonLink>

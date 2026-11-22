@@ -12,7 +12,7 @@ export function TipsBanner({ href }: TipsBannerProps) {
         <div>
           <h2
             id="tips-edukasi-judul"
-            className="text-[17px] font-semibold text-brand-dark"
+            className="text-[16px] font-semibold text-brand-dark"
           >
             Tips penting mudah untuk mulai memilah
           </h2>

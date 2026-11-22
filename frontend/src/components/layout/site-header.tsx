@@ -16,10 +16,10 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-line bg-surface">
       <div className="mx-auto grid h-[64px] w-full max-w-[1440px] grid-cols-[1fr_auto] items-center gap-6 px-5 sm:px-8 lg:grid-cols-[1fr_auto_1fr] lg:px-14">
         <Link href="/" className="flex flex-col justify-center justify-self-start">
-          <span className="text-[26px] font-bold leading-none tracking-tight text-brand-dark">
+          <span className="text-[24px] font-bold leading-none tracking-tight text-brand-dark">
             SI-PANTAS
           </span>
-          <span className="mt-1 text-[13px] leading-none text-ink-muted">
+          <span className="mt-1 text-[12px] leading-none text-ink-muted">
             RW XI Kelurahan Temas
           </span>
         </Link>
@@ -34,7 +34,7 @@ export function SiteHeader() {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={[
-                      "inline-flex h-10 items-center rounded-[10px] px-4 text-body transition-colors",
+                      "inline-flex h-10 items-center rounded-[10px] px-4 text-nav transition-colors",
                       active
                         ? "bg-brand-soft font-semibold text-brand-dark"
                         : "text-ink-muted hover:bg-brand-tint hover:text-ink",
@@ -51,7 +51,7 @@ export function SiteHeader() {
         <div className="hidden justify-self-end lg:block">
           <Link
             href="/bantuan"
-            className="inline-flex h-[42px] items-center rounded-[10px] bg-brand-soft px-4 text-body font-semibold text-brand-dark transition-colors hover:bg-[#dcece0]"
+            className="inline-flex h-[42px] items-center rounded-[10px] bg-brand-soft px-4 text-nav font-semibold text-brand-dark transition-colors hover:bg-[#dcece0]"
           >
             Butuh Bantuan?
           </Link>
@@ -107,7 +107,7 @@ export function SiteHeader() {
                     onClick={() => setOpen(false)}
                     aria-current={active ? "page" : undefined}
                     className={[
-                      "flex min-h-11 items-center rounded-[10px] px-4 text-body",
+                      "flex min-h-11 items-center rounded-[10px] px-4 text-nav",
                       active
                         ? "bg-brand-soft font-semibold text-brand-dark"
                         : "text-ink-muted",
@@ -122,7 +122,7 @@ export function SiteHeader() {
               <Link
                 href="/bantuan"
                 onClick={() => setOpen(false)}
-                className="mt-1 flex min-h-11 items-center justify-center rounded-[10px] bg-brand-soft px-4 text-body font-semibold text-brand-dark"
+                className="mt-1 flex min-h-11 items-center justify-center rounded-[10px] bg-brand-soft px-4 text-nav font-semibold text-brand-dark"
               >
                 Butuh Bantuan?
               </Link>
