@@ -55,18 +55,23 @@ export function formatDayTimeWib(iso: string, now: Date): string {
   return `${formatRelativeDay(iso, now)}, ${formatTimeWib(iso)}`;
 }
 
-const dateFormatter = new Intl.DateTimeFormat("id-ID", {
+const shortDateFormatter = new Intl.DateTimeFormat("id-ID", {
   day: "numeric",
-  month: "long",
+  month: "short",
   year: "numeric",
   timeZone: JAKARTA,
 });
 
-/** "20 November 2026" */
-export function formatDateId(iso: string): string {
+/** "18 Okt 2026" */
+export function formatDateShort(iso: string): string {
   const date = new Date(iso);
 
   if (Number.isNaN(date.getTime())) return "tanggal tidak diketahui";
 
-  return dateFormatter.format(date);
+  return shortDateFormatter.format(date);
+}
+
+/** "18 Okt 2026, 10.00" */
+export function formatDateTimeShort(iso: string): string {
+  return `${formatDateShort(iso)}, ${formatTimeWib(iso)}`;
 }

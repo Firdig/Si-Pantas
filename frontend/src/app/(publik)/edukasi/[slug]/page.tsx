@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Breadcrumb } from "@/components/ui/breadcrumb";
-import { formatDateId } from "@/lib/format";
+import { Badge } from "@/components/ui/badge";
+import { formatDateShort, formatDateTimeShort } from "@/lib/format";
 import { edukasiPublik, getEdukasiBySlug } from "@/lib/mock/edukasi";
 
 export const instant = false;
@@ -17,16 +18,18 @@ export async function generateMetadata({
   const artikel = getEdukasiBySlug(slug);
 
   return {
-    title: artikel ? `${artikel.title} — SI-PANTAS` : "Artikel tidak ditemukan — SI-PANTAS",
+    title: artikel
+      ? `${artikel.title} — SI-PANTAS`
+      : "Artikel tidak ditemukan — SI-PANTAS",
     description: artikel?.content.slice(0, 150),
   };
 }
 
-/** Perkiraan waktu baca, dihitung dari jumlah kata (±200 kata/menit). */
-function hitungMenitBaca(teks: string): number {
-  const jumlahKata = teks.trim().split(/\s+/).filter(Boolean).length;
+/** "Organik" → "Sampah Organik"; "Umum" → "Panduan Umum". */
+function labelKategori(kategori: string | null): string {
+  if (!kategori || kategori === "Umum") return "Panduan Umum";
 
-  return Math.max(1, Math.round(jumlahKata / 200));
+  return `Sampah ${kategori}`;
 }
 
 export default async function DetailEdukasiPage({
@@ -43,41 +46,59 @@ export default async function DetailEdukasiPage({
     .filter(Boolean);
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] px-5 pb-14 pt-8 sm:px-8 lg:px-14 lg:pb-20 lg:pt-10">
-      <article className="max-w-[860px]">
-        <Breadcrumb
-          items={[
-            { label: "Beranda", href: "/" },
-            { label: "Pusat Edukasi", href: "/edukasi" },
-            { label: artikel.title },
-          ]}
-        />
+    <div className="mx-auto w-full max-w-[1440px] px-4 pb-10 pt-6 sm:px-8 sm:pb-14 sm:pt-8 lg:px-14 lg:pb-16 lg:pt-10">
+      {/* Kepala halaman — rata kiri mengikuti tepi konten */}
+      <div className="max-w-[760px]">
+        <Link
+          href="/edukasi"
+          className="inline-flex min-h-11 items-center gap-2 text-caption font-semibold text-brand hover:underline"
+        >
+          <span aria-hidden="true">←</span> Kembali ke Pusat Edukasi
+        </Link>
 
-        <h1 className="mt-4 text-page-title font-bold leading-[1.2] tracking-tight text-ink sm:text-[30px]">
+        <div className="mt-3">
+          <Badge tone="success">{labelKategori(artikel.category)}</Badge>
+        </div>
+
+        <h1 className="mt-2 text-balance text-page-title font-bold leading-[1.2] tracking-tight text-ink">
           {artikel.title}
         </h1>
 
-        <p className="mt-2 text-caption text-ink-muted">
-          {artikel.category ?? "Umum"} · Bacaan ±{hitungMenitBaca(artikel.content)}{" "}
-          menit
+        <p className="mt-1 text-caption text-ink-muted">
+          Diperbarui {formatDateShort(artikel.updatedAt)}
         </p>
+      </div>
 
-        {artikel.imageUrl ? (
-          <div className="mt-6 overflow-hidden rounded-xl border border-line bg-brand-tint">
-            {/* eslint-disable-next-line @next/next/no-img-element -- URL gambar berasal dari backend, host belum ditentukan */}
-            <img
-              src={artikel.imageUrl}
-              alt={`Ilustrasi: ${artikel.title}`}
-              className="aspect-[16/9] w-full object-cover"
-            />
-          </div>
-        ) : (
-          <div className="mt-6 flex aspect-[16/9] w-full items-center justify-center rounded-xl border border-dashed border-line-strong bg-brand-tint">
-            <p className="text-caption text-ink-subtle">
-              Gambar ilustrasi belum tersedia.
-            </p>
-          </div>
-        )}
+      {/* Badan artikel — kolom di tengah halaman */}
+      <article className="mx-auto mt-8 max-w-[720px] sm:mt-10">
+        {/* Judul yang sama diulang di badan artikel seperti desain; disembunyikan
+            dari pembaca layar agar tidak dibacakan dua kali berturut-turut. */}
+        <h2
+          aria-hidden="true"
+          className="text-balance text-center text-[22px] font-semibold leading-snug text-ink sm:text-[24px]"
+        >
+          {artikel.title}
+        </h2>
+
+        <div className="mt-6 overflow-hidden rounded-xl bg-[#eef1ec]">
+          {artikel.imageUrl ? (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element -- URL gambar berasal dari backend, host belum ditentukan */}
+              <img
+                src={artikel.imageUrl}
+                alt={`Ilustrasi: ${artikel.title}`}
+                className="aspect-[2.2/1] w-full object-cover"
+              />
+            </>
+          ) : (
+            <div className="flex aspect-[2.2/1] items-center justify-center px-6">
+              <p className="text-center text-caption text-ink-subtle">
+                Gambar materi akan ditampilkan di sini jika diunggah oleh
+                Operator.
+              </p>
+            </div>
+          )}
+        </div>
 
         <div className="mt-6 space-y-4 text-body leading-relaxed text-ink">
           {paragraf.map((bagian) => (
@@ -85,10 +106,10 @@ export default async function DetailEdukasiPage({
           ))}
         </div>
 
-        <p className="mt-10 border-t border-line pt-4 text-caption text-ink-muted">
-          Ditulis oleh {artikel.authorName} · Diperbarui{" "}
-          {formatDateId(artikel.updatedAt)}
-        </p>
+        <div className="mt-8 flex flex-col items-center gap-1 rounded-lg border border-line bg-surface px-4 py-3 text-center text-meta text-ink-muted sm:flex-row sm:justify-between sm:text-left">
+          <p>Dibuat: {formatDateTimeShort(artikel.createdAt)}</p>
+          <p>Diperbarui: {formatDateTimeShort(artikel.updatedAt)}</p>
+        </div>
       </article>
     </div>
   );

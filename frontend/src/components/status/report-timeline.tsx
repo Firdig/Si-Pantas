@@ -30,11 +30,11 @@ export function ReportTimeline({ entries }: ReportTimelineProps) {
         <li
           key={entry.id}
           className={cn(
-            "flex gap-3 rounded-xl px-3 py-3",
+            "flex gap-2 rounded-xl px-2 py-3 sm:gap-3 sm:px-3",
             entry.isLatest && "bg-brand-tint",
           )}
         >
-          <span className="w-12 shrink-0 pt-0.5 text-caption font-semibold tabular-nums text-ink-muted">
+          <span className="w-10 shrink-0 pt-0.5 text-caption font-semibold tabular-nums text-ink-muted sm:w-12">
             {entry.timeLabel}
           </span>
 

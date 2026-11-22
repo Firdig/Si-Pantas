@@ -29,7 +29,7 @@ export function StatusLegend() {
         Status
       </h2>
 
-      <ul className="mt-3 space-y-3">
+      <ul className="mt-4 space-y-3">
         {urutanStatus.map((status) => {
           const display = reportStatusDisplay[status];
 

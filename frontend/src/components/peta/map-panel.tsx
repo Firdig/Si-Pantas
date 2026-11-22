@@ -25,7 +25,7 @@ export function MapPanel({ points, activeId, onSelect }: MapPanelProps) {
         </p>
       </div>
 
-      <div className="mt-3 h-[300px] overflow-hidden rounded-xl border border-[#d8e7db] bg-brand-tint sm:h-[360px] lg:h-[400px]">
+      <div className="relative isolate z-0 mt-3 h-[260px] overflow-hidden rounded-xl border border-[#d8e7db] bg-brand-tint sm:h-[360px] lg:h-[400px]">
         <SampahMap points={points} activeId={activeId} onSelect={onSelect} />
       </div>
     </section>

@@ -4,7 +4,7 @@ import { ringkasan } from "@/lib/mock/beranda";
 export function SummaryCard() {
   return (
     <section aria-labelledby="ringkasan-judul">
-      <Card className="p-6">
+      <Card className="p-5 sm:p-6">
         <h2
           id="ringkasan-judul"
           className="text-section-title font-semibold text-ink"
@@ -20,7 +20,7 @@ export function SummaryCard() {
             >
               <dd
                 className={[
-                  "text-[30px] font-bold leading-none",
+                  "text-stat font-bold leading-none",
                   stat.tone === "brand" ? "text-brand" : "text-info",
                 ].join(" ")}
               >

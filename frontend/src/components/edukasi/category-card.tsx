@@ -10,7 +10,7 @@ type CategoryCardProps = {
 
 export function CategoryCard({ title, description, href }: CategoryCardProps) {
   return (
-    <Card className="flex h-full flex-col p-5">
+    <Card className="flex h-full flex-col p-4 sm:p-5">
       <h3 className="text-section-title font-semibold text-ink">{title}</h3>
 
       <p className="mt-2 text-caption leading-relaxed text-ink-muted">

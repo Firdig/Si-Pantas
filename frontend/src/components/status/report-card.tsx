@@ -20,37 +20,36 @@ export function ReportCard({ report }: ReportCardProps) {
   return (
     <li>
       <article className="rounded-xl border border-line bg-surface p-4 transition-colors hover:border-line-strong sm:p-5">
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <div className="min-w-0 flex-1">
-            <p className="text-caption text-ink-subtle">{report.pointLabel}</p>
+        <div className="flex items-start justify-between gap-3">
+          <p className="text-caption text-ink-subtle">{report.pointLabel}</p>
+          <Badge tone={status.tone}>{status.label}</Badge>
+        </div>
 
-            <h3 className="mt-1 text-item-title font-semibold leading-snug text-ink">
-              {report.title}
-            </h3>
+        <h3 className="mt-1.5 text-item-title font-semibold leading-snug text-ink">
+          {report.title}
+        </h3>
 
-            {report.description ? (
-              <p className="mt-1 line-clamp-2 text-caption text-ink-muted">
-                {report.description}
-              </p>
-            ) : null}
+        {report.description ? (
+          <p className="mt-1 line-clamp-2 text-caption text-ink-muted">
+            {report.description}
+          </p>
+        ) : null}
 
-            <p className="mt-2 text-meta text-ink-subtle">
-              {report.reportCode} · Diperbarui {report.updatedLabel}
-            </p>
-          </div>
+        <p className="mt-2 text-meta text-ink-subtle">
+          {report.reportCode} · Diperbarui {report.updatedLabel}
+        </p>
 
-          <div className="flex shrink-0 flex-col items-end gap-3">
-            <Badge tone={status.tone}>{status.label}</Badge>
-
-            <ButtonLink
-              href={`/status/${report.reportCode}`}
-              variant="outline"
-              size="md"
-              aria-label={`Detail laporan ${report.reportCode}`}
-            >
-              Detail Laporan
-            </ButtonLink>
-          </div>
+        <div className="mt-3 flex sm:justify-end">
+          <ButtonLink
+            href={`/status/${report.reportCode}`}
+            variant="outline"
+            size="md"
+            full
+            className="sm:w-auto"
+            aria-label={`Detail laporan ${report.reportCode}`}
+          >
+            Detail Laporan
+          </ButtonLink>
         </div>
       </article>
     </li>

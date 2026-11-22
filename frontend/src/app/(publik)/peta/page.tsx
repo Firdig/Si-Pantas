@@ -20,7 +20,7 @@ export default function PetaPage() {
   }));
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] px-5 pb-14 pt-10 sm:px-8 lg:px-14 lg:pb-20 lg:pt-12">
+    <div className="mx-auto w-full max-w-[1440px] px-4 pb-10 pt-6 sm:px-8 sm:pb-14 sm:pt-10 lg:px-14 lg:pb-20 lg:pt-12">
       <PageHeader
         title="Peta Titik Sampah"
         description="Lihat titik pengumpulan sampah prioritas dan kondisi terakhirnya."

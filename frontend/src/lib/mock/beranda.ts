@@ -39,6 +39,7 @@ export const ringkasan = {
 
 export const footer = {
   note: "SI-PANTAS · Sistem Informasi Pemantauan Sampah",
+  tagline: "Sistem Informasi Pemantauan Sampah · RW XI Kelurahan Temas",
   links: [
     { label: "Privasi Pelapor", href: "/privasi" },
     { label: "Kontak RW", href: "/kontak" },

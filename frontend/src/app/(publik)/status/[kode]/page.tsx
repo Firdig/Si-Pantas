@@ -70,7 +70,7 @@ export default async function DetailStatusPage({
   });
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] px-5 pb-14 pt-10 sm:px-8 lg:px-14 lg:pb-20 lg:pt-12">
+    <div className="mx-auto w-full max-w-[1440px] px-4 pb-10 pt-6 sm:px-8 sm:pb-14 sm:pt-10 lg:px-14 lg:pb-20 lg:pt-12">
       <PageHeader
         title="Status Laporan"
         description="Riwayat penanganan laporan sampah di lingkungan RW XI."
@@ -115,7 +115,7 @@ export default async function DetailStatusPage({
         </Card>
 
         <div className="space-y-4">
-          <Card className="p-5">
+          <Card className="p-4 sm:p-5">
             <h2 className="text-section-title font-semibold text-ink">
               Informasi untuk Anda
             </h2>

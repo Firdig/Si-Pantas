@@ -7,7 +7,7 @@ export function Hero() {
     <div className="max-w-[700px]">
       <Badge tone="success">{hero.badge}</Badge>
 
-      <h1 className="mt-4 text-[28px] font-bold leading-[1.18] tracking-tight text-ink sm:text-[32px] lg:text-hero">
+      <h1 className="mt-4 text-balance text-hero font-bold leading-[1.16] tracking-tight text-ink">
         {hero.title}
       </h1>
 
@@ -17,7 +17,11 @@ export function Hero() {
 
       {/* ITERASI 2: satu ajakan saja — memantau status laporan. */}
       <div className="mt-5">
-        <ButtonLink href={hero.action.href} variant="outline">
+        <ButtonLink
+          href={hero.action.href}
+          variant="outline"
+          className="w-full sm:w-auto"
+        >
           {hero.action.label}
         </ButtonLink>
       </div>

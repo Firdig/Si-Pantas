@@ -42,7 +42,7 @@ export default async function DetailTitikPage({ params }: PageProps<"/peta/[id]"
   const lastUpdated = formatRelativeDay(point.lastUpdatedAt, MOCK_NOW);
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] px-5 pb-14 pt-10 sm:px-8 lg:px-14 lg:pb-20 lg:pt-12">
+    <div className="mx-auto w-full max-w-[1440px] px-4 pb-10 pt-6 sm:px-8 sm:pb-14 sm:pt-10 lg:px-14 lg:pb-20 lg:pt-12">
       <PageHeader
         title={`${point.name} · ${point.rt}`}
         description="Detail titik pengumpulan sampah di wilayah RW XI."
@@ -54,7 +54,7 @@ export default async function DetailTitikPage({ params }: PageProps<"/peta/[id]"
             Foto kondisi titik sampah
           </h2>
 
-          <div className="mt-4 flex h-[300px] items-center justify-center rounded-xl border border-dashed border-line-strong bg-brand-tint sm:h-[380px] lg:h-[420px]">
+          <div className="mt-4 flex h-[240px] items-center justify-center rounded-xl border border-dashed border-line-strong bg-brand-tint sm:h-[340px] lg:h-[420px]">
             <p className="text-caption text-ink-subtle">
               Foto titik belum tersedia.
             </p>
@@ -62,7 +62,7 @@ export default async function DetailTitikPage({ params }: PageProps<"/peta/[id]"
         </Card>
 
         <div className="space-y-4">
-          <Card className="p-5">
+          <Card className="p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-section-title font-semibold text-ink">
                 Kondisi saat ini
@@ -76,7 +76,7 @@ export default async function DetailTitikPage({ params }: PageProps<"/peta/[id]"
             </p>
           </Card>
 
-          <Card className="p-5">
+          <Card className="p-4 sm:p-5">
             <h2 className="text-section-title font-semibold text-ink">
               Informasi titik
             </h2>
