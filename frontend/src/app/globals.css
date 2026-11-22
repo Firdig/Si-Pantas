@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme {
+  /* Warna — diambil dari halaman Foundations Figma */
+  --color-canvas: #f5f7f4;
+  --color-surface: #ffffff;
+  --color-ink: #18241d;
+  --color-ink-muted: #556159;
+  --color-ink-subtle: #69746c;
+  --color-line: #e6ebe6;
+  --color-line-strong: #dbe2dc;
+
+  --color-brand: #1e6a3a;
+  --color-brand-dark: #154c2a;
+  --color-brand-deep: #143f27;
+  --color-brand-soft: #e7f3ea;
+  --color-brand-tint: #f0f7f1;
+
+  --color-info: #1683d2;
+  --color-info-dark: #19405d;
+  --color-info-soft: #e8f1fb;
+
+  --color-warn: #b06b00;
+  --color-warn-soft: #fff4dd;
+
+  --color-danger: #b3261e;
+  --color-danger-soft: #fbe9e7;
+
+  /* Tipografi — Foundations: judul 29, bagian 21, isi 18, keterangan 16 */
+  --text-page-title: 1.8125rem;
+  --text-section-title: 1.3125rem;
+  --text-body: 1.125rem;
+  --text-caption: 1rem;
+
+  --radius-card: 1rem;
+
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.55;
+}
+
+/* Target sentuh minimal untuk pengguna usia lanjut (Foundations) */
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---------- Peta (Leaflet) ---------- */
+
+.leaflet-container {
+  background: var(--color-brand-soft);
+  font-family: var(--font-sans);
+  font-size: var(--text-caption);
+}
+
+.leaflet-control-attribution {
+  font-size: 11px;
+}
+
+/* divIcon Leaflet dipakai sebagai wadah pill; ukurannya 0 dan pill
+   diposisikan tepat di tengah koordinat. */
+.sampah-marker-wrapper {
+  background: transparent;
+  border: 0;
+}
+
+.sampah-marker {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-line-strong);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(21, 76, 42, 0.18);
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.sampah-marker::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--color-brand);
+}
+
+/* Titik yang perlu perhatian tetap dibedakan lewat label teks,
+   warna titik hanya penguat. */
+.sampah-marker[data-tone="warning"]::before {
+  background: var(--color-warn);
+}
+
+.sampah-marker.is-active {
+  background: var(--color-brand-dark);
+  border-color: var(--color-brand-dark);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(21, 76, 42, 0.32);
+}
+
+.sampah-marker.is-active::before {
+  background: #9be0b0;
+}
+
+.sampah-marker-wrapper:focus-visible .sampah-marker {
+  outline: 3px solid var(--color-brand);
+  outline-offset: 2px;
+}
