@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Router } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
@@ -7,7 +7,25 @@ import { env } from "./config/env.js";
 import { prisma } from "./config/database.js";
 import { sendSuccess, sendError } from "./utils/response.js";
 import { errorHandler, notFoundHandler } from "./middlewares/errorHandler.js";
+import { authenticate } from "./middlewares/authenticate.js";
+import { authorize } from "./middlewares/authorize.js";
+
 import authRoutes from "./modules/auth/auth.routes.js";
+import publicRoutes from "./modules/public/public.routes.js";
+import usersRoutes from "./modules/users/users.routes.js";
+import tpsContactsRoutes from "./modules/tps-contacts/tps-contacts.routes.js";
+import educationRoutes from "./modules/education/education.routes.js";
+import dashboardRoutes from "./modules/dashboard/dashboard.routes.js";
+import activityLogsRoutes from "./modules/activity-logs/activity-logs.routes.js";
+import {
+  kaderWastePointsRouter,
+  operatorWastePointsRouter,
+} from "./modules/waste-points/waste-points.routes.js";
+import { reportGroupsRouter, reportsRouter } from "./modules/reports/reports.routes.js";
+import {
+  operatorCollectionTasksRouter,
+  tpsCollectionRouter,
+} from "./modules/collection/collection.routes.js";
 
 const app = express();
 
@@ -54,7 +72,7 @@ app.get("/health", async (_req, res) => {
   }
 });
 
-// API v1 routes
+// API v1 root
 app.get("/api/v1", (_req, res) => {
   return sendSuccess(res, {
     message: "Si Pantas API v1 siap digunakan",
@@ -62,7 +80,36 @@ app.get("/api/v1", (_req, res) => {
   });
 });
 
+// 1. Public API (Warga — read-only, tanpa login)
+app.use("/api/v1/public", publicRoutes);
+
+// 2. Authentication API (Kader & Operator)
 app.use("/api/v1/auth", authRoutes);
+
+// 3. Kader API (JWT + role KADER only)
+const kaderRouter = Router();
+kaderRouter.use(authenticate, authorize("KADER"));
+kaderRouter.use("/reports", reportsRouter);
+kaderRouter.use("/report-groups", reportGroupsRouter);
+kaderRouter.use("/waste-points", kaderWastePointsRouter);
+app.use("/api/v1/kader", kaderRouter);
+
+// 4. Operator API (JWT + role OPERATOR only)
+const operatorRouter = Router();
+operatorRouter.use(authenticate, authorize("OPERATOR"));
+operatorRouter.use("/dashboard", dashboardRoutes);
+operatorRouter.use("/reports", reportsRouter);
+operatorRouter.use("/report-groups", reportGroupsRouter);
+operatorRouter.use("/waste-points", operatorWastePointsRouter);
+operatorRouter.use("/education", educationRoutes);
+operatorRouter.use("/users", usersRoutes);
+operatorRouter.use("/collection-tasks", operatorCollectionTasksRouter);
+operatorRouter.use("/tps-contacts", tpsContactsRoutes);
+operatorRouter.use("/activity-logs", activityLogsRoutes);
+app.use("/api/v1/operator", operatorRouter);
+
+// 5. TPS Collection API (Token rahasia URL, tanpa JWT)
+app.use("/api/v1/collection", tpsCollectionRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
