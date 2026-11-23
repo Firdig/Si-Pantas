@@ -7,6 +7,7 @@ import { env } from "./config/env.js";
 import { prisma } from "./config/database.js";
 import { sendSuccess, sendError } from "./utils/response.js";
 import { errorHandler, notFoundHandler } from "./middlewares/errorHandler.js";
+import authRoutes from "./modules/auth/auth.routes.js";
 
 const app = express();
 
@@ -53,13 +54,15 @@ app.get("/health", async (_req, res) => {
   }
 });
 
-// API v1 placeholder router (akan diisi pada Fase 2 & Fase 3)
+// API v1 routes
 app.get("/api/v1", (_req, res) => {
   return sendSuccess(res, {
     message: "Si Pantas API v1 siap digunakan",
     data: { version: "1.0.0" },
   });
 });
+
+app.use("/api/v1/auth", authRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
