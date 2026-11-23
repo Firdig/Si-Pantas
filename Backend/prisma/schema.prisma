@@ -41,6 +41,13 @@ enum ActorType {
   SYSTEM
 }
 
+enum WhatsappDeliveryStatus {
+  QUEUED
+  SENT
+  DELIVERED
+  FAILED
+}
+
 model User {
   id           String   @id @default(uuid()) @db.Uuid
   name         String
@@ -150,11 +157,33 @@ model CollectionTask {
   revokedAt    DateTime?            @map("revoked_at")
   createdAt    DateTime             @default(now()) @map("created_at")
 
-  group      ReportGroup @relation(fields: [groupId], references: [id])
-  tpsContact TpsContact  @relation(fields: [tpsContactId], references: [id])
+  group        ReportGroup   @relation(fields: [groupId], references: [id])
+  tpsContact   TpsContact    @relation(fields: [tpsContactId], references: [id])
+  whatsappLogs WhatsappLog[]
 
   @@index([status, expiresAt])
   @@map("collection_tasks")
+}
+
+model WhatsappLog {
+  id                String                 @id @default(uuid()) @db.Uuid
+  collectionTaskId  String                 @map("collection_task_id") @db.Uuid
+  recipientPhone    String                 @map("recipient_phone")
+  messageBody       String                 @map("message_body")
+  provider          String                 @default("mock")
+  providerMessageId String?                @map("provider_message_id")
+  status            WhatsappDeliveryStatus @default(QUEUED)
+  errorMessage      String?                @map("error_message")
+  attemptCount      Int                    @default(1) @map("attempt_count")
+  sentAt            DateTime?              @map("sent_at")
+  createdAt         DateTime               @default(now()) @map("created_at")
+  updatedAt         DateTime               @updatedAt @map("updated_at")
+
+  collectionTask CollectionTask @relation(fields: [collectionTaskId], references: [id], onDelete: Cascade)
+
+  @@index([collectionTaskId])
+  @@index([status])
+  @@map("whatsapp_logs")
 }
 
 model ReportStatusHistory {
