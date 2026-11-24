@@ -102,6 +102,9 @@ WHATSAPP_API_URL=""
 SEED_OPERATOR_NAME="Operator Si Pantas"
 SEED_OPERATOR_USERNAME="operator"
 SEED_OPERATOR_PASSWORD="ChangeMe123!"
+SEED_KADER_NAME="Kader Si Pantas"
+SEED_KADER_USERNAME="kader"
+SEED_KADER_PASSWORD="ChangeMe123!"
 ```
 
 #### Penjelasan Variabel Penting
@@ -117,6 +120,7 @@ SEED_OPERATOR_PASSWORD="ChangeMe123!"
 | `COOKIE_SECURE` | Tidak | Set `false` untuk pengembangan lokal (`http`), dan `true` saat production (`https`). |
 | `WHATSAPP_PROVIDER` | Tidak | Default `"mock"` untuk pengembangan lokal (pesan dicetak di console server, tidak mengirim WA sungguhan). |
 | `SEED_OPERATOR_*` | Ya (saat seed) | Kredensial akun **Operator** awal yang dibuat saat menjalankan `npm run prisma:seed`. |
+| `SEED_KADER_*` | Tidak | Kredensial akun **Kader** awal. Menggunakan nilai `kader` dan `ChangeMe123!` jika tidak diisi. |
 
 > **Tips:** Untuk membuat string acak yang aman bagi `JWT_ACCESS_SECRET` dan `JWT_REFRESH_SECRET`, jalankan perintah berikut di terminal (jalankan dua kali untuk dua secret berbeda):
 > ```bash
@@ -137,9 +141,9 @@ npm run prisma:migrate
 > npm run prisma:deploy
 > ```
 
-### 6. Seed Akun Operator Awal
+### 6. Seed Akun Operator dan Kader Awal
 
-Jalankan script seed untuk membuat akun **Operator** pertama di database berdasarkan konfigurasi `SEED_OPERATOR_*` pada `.env`:
+Jalankan script seed untuk membuat akun **Operator** dan **Kader** awal di database berdasarkan konfigurasi `SEED_OPERATOR_*` dan `SEED_KADER_*` pada `.env`:
 
 ```bash
 npm run prisma:seed

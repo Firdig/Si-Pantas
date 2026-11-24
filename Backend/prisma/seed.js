@@ -1,8 +1,16 @@
 import "dotenv/config";
-import bcrypt from "bcrypt";
 import pg from "pg";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { seedEducationContents } from "./seeds/educationContents.js";
+import { seedUsers } from "./seeds/users.js";
+import { seedTpsContacts } from "./seeds/tpsContacts.js";
+import { seedWastePoints } from "./seeds/wastePoints.js";
+import { seedReports } from "./seeds/reports.js";
+import { seedCollectionTasks } from "./seeds/collectionTasks.js";
+import { seedWhatsappLogs } from "./seeds/whatsappLogs.js";
+import { seedReportStatusHistories } from "./seeds/reportStatusHistories.js";
+import { seedReportPhotos } from "./seeds/reportPhotos.js";
 
 const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -11,39 +19,15 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  const name = process.env.SEED_OPERATOR_NAME || "Operator Si Pantas";
-  const username = process.env.SEED_OPERATOR_USERNAME || "operator";
-  const password = process.env.SEED_OPERATOR_PASSWORD;
-
-  if (!password) {
-    throw new Error("SEED_OPERATOR_PASSWORD wajib diisi di .env sebelum menjalankan seed");
-  }
-
-  const passwordHash = await bcrypt.hash(password, 12);
-
-  const operator = await prisma.user.upsert({
-    where: { username },
-    update: {
-      name,
-      isActive: true,
-    },
-    create: {
-      name,
-      username,
-      passwordHash,
-      role: "OPERATOR",
-      isActive: true,
-    },
-    select: {
-      id: true,
-      name: true,
-      username: true,
-      role: true,
-      isActive: true,
-    },
-  });
-
-  console.log("[Seed] Akun Operator siap:", operator);
+  const { operator, kader } = await seedUsers(prisma);
+  await seedTpsContacts(prisma);
+  await seedWastePoints(prisma);
+  await seedEducationContents(prisma, operator.id);
+  await seedReports(prisma, kader.id);
+  await seedCollectionTasks(prisma);
+  await seedWhatsappLogs(prisma);
+  await seedReportStatusHistories(prisma, kader.id);
+  await seedReportPhotos(prisma);
 }
 
 main()
