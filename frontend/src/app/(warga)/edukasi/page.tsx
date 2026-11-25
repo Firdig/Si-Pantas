@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { CategoryCard } from "@/components/warga/edukasi/category-card";
 import { TipsBanner } from "@/components/warga/edukasi/tips-banner";
 import { PageHeader } from "@/components/ui/page-header";
-import { getEdukasiByKategori, getEdukasiBySlug, KATEGORI_EDUKASI } from "@/lib/mock/warga/edukasi";
+import { getDaftarEdukasi } from "@/lib/edukasi";
+import { cariPanduanLengkap, susunKartuKategori } from "@/lib/edukasi-kategori";
 
 export const metadata: Metadata = {
   title: "Pusat Edukasi Pemilahan Sampah — SI-PANTAS",
@@ -10,18 +11,10 @@ export const metadata: Metadata = {
     "Panduan praktis memilah sampah rumah tangga di RW XI Kelurahan Temas: organik, anorganik, residu, dan B3.",
 };
 
-const PANDUAN_LENGKAP = getEdukasiBySlug("panduan-lengkap-memilah-sampah");
-
-export default function EdukasiPage() {
-  const kategori = KATEGORI_EDUKASI.map((item) => {
-    const artikel = getEdukasiByKategori(item.category);
-
-    return {
-      title: item.title,
-      description: item.description,
-      href: artikel ? `/edukasi/${artikel.slug}` : null,
-    };
-  });
+export default async function EdukasiPage() {
+  const artikel = await getDaftarEdukasi();
+  const kategori = susunKartuKategori(artikel);
+  const panduanLengkap = cariPanduanLengkap(artikel);
 
   return (
     <div className="mx-auto w-full max-w-[1440px] px-4 pb-10 pt-6 sm:px-8 sm:pb-14 sm:pt-10 lg:px-14 lg:pb-20 lg:pt-12">
@@ -30,16 +23,22 @@ export default function EdukasiPage() {
         description="Panduan praktis memilah sampah dari rumah, dari sisa makanan hingga bahan berbahaya."
       />
 
-      <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {kategori.map((item) => (
-          <li key={item.title} className="h-full">
-            <CategoryCard {...item} />
-          </li>
-        ))}
-      </ul>
+      {kategori.length > 0 ? (
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {kategori.map((item) => (
+            <li key={item.title} className="h-full">
+              <CategoryCard {...item} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mt-8 rounded-lg border border-line bg-surface px-4 py-6 text-center text-caption text-ink-muted">
+          Belum ada panduan yang dipublikasikan. Silakan cek kembali nanti.
+        </p>
+      )}
 
-      {PANDUAN_LENGKAP ? (
-        <TipsBanner href={`/edukasi/${PANDUAN_LENGKAP.slug}`} />
+      {panduanLengkap ? (
+        <TipsBanner href={`/edukasi/${panduanLengkap.slug}`} />
       ) : null}
     </div>
   );

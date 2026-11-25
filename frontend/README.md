@@ -20,6 +20,20 @@ npm run dev
 
 Buka http://localhost:3000
 
+Halaman edukasi mengambil data dari backend Express. Jalankan backend lebih
+dulu, lalu siapkan `.env.local`:
+
+```powershell
+Copy-Item .env.example .env.local
+```
+
+```env
+API_BASE_URL=http://localhost:5000/api/v1
+```
+
+Variabel ini hanya dipakai di server (Server Component), jadi tidak perlu
+prefix `NEXT_PUBLIC_`.
+
 ## Cek dari HP lewat ngrok
 
 Jalankan dua terminal:
@@ -77,6 +91,12 @@ src/types/api.ts         draf kontrak API untuk backend
 
 ## Data
 
-Semua data masih **mock** di `src/lib/mock/warga/` dan mengikuti bentuk di
-`src/types/api.ts`. Saat API Express siap, ganti sumber data di halaman —
-komponen tidak perlu diubah.
+Data edukasi (`/edukasi` dan `/edukasi/[slug]`) sudah memakai API publik
+backend lewat `src/lib/edukasi.ts`:
+
+- `GET /api/v1/public/education` — daftar konten PUBLISHED
+- `GET /api/v1/public/education/:slug` — detail artikel
+
+Sisanya masih **mock** di `src/lib/mock/` dan mengikuti bentuk di
+`src/types/api.ts`. Saat API Express siap untuk fitur lain, ganti sumber data
+di halaman — komponen tidak perlu diubah.

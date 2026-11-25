@@ -3,19 +3,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { formatDateShort, formatDateTimeShort } from "@/lib/format";
-import { edukasiPublik, getEdukasiBySlug } from "@/lib/mock/warga/edukasi";
+import { getEdukasiBySlug } from "@/lib/edukasi";
 
 export const instant = false;
-
-export function generateStaticParams() {
-  return edukasiPublik.map((edukasi) => ({ slug: edukasi.slug }));
-}
 
 export async function generateMetadata({
   params,
 }: PageProps<"/edukasi/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const artikel = getEdukasiBySlug(slug);
+  const artikel = await getEdukasiBySlug(slug);
 
   return {
     title: artikel
@@ -25,18 +21,31 @@ export async function generateMetadata({
   };
 }
 
-/** "Organik" → "Sampah Organik"; "Umum" → "Panduan Umum". */
-function labelKategori(kategori: string | null): string {
-  if (!kategori || kategori === "Umum") return "Panduan Umum";
+const KATEGORI_SAMPAH = new Set(["organik", "anorganik", "residu", "b3"]);
 
-  return `Sampah ${kategori}`;
+/**
+ * "Organik" → "Sampah Organik"; "B3" → "Sampah B3 (Rumah Tangga)";
+ * kategori tematik seperti "Kompos" ditampilkan apa adanya;
+ * kosong / "Umum" → "Panduan Umum".
+ */
+function labelKategori(kategori: string | null): string {
+  const label = kategori?.trim();
+
+  if (!label || label.toLowerCase() === "umum") return "Panduan Umum";
+
+  const kunci = label.toLowerCase();
+
+  if (!KATEGORI_SAMPAH.has(kunci)) return label;
+  if (kunci === "b3") return "Sampah B3 (Rumah Tangga)";
+
+  return `Sampah ${label}`;
 }
 
 export default async function DetailEdukasiPage({
   params,
 }: PageProps<"/edukasi/[slug]">) {
   const { slug } = await params;
-  const artikel = getEdukasiBySlug(slug);
+  const artikel = await getEdukasiBySlug(slug);
 
   if (!artikel) notFound();
 

@@ -74,11 +74,24 @@ export type Report = {
   histories?: ReportStatusHistoryEntry[];
 };
 
-/** Bentuk response seragam yang diusulkan untuk semua endpoint. */
+/** Metadata paginasi dari `buildPaginationMeta` di backend. */
+export type PaginationMeta = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+};
+
+/** Bentuk response seragam dari `sendSuccess` di backend. */
 export type ApiResponse<T> = {
   success: boolean;
   data: T;
   message?: string;
+  meta?: PaginationMeta;
+  error?: {
+    code: string;
+    details?: unknown;
+  };
 };
 
 /** Enum `EducationStatus` di Prisma. */
@@ -90,6 +103,9 @@ export type EducationStatus = "DRAFT" | "PUBLISHED";
  *
  * `content` masih String bebas — disepakati dulu sebagai **teks biasa**
  * dengan paragraf dipisah baris kosong.
+ *
+ * Catatan: tipe ini hanya dipakai oleh data mock. Data asli dari backend
+ * memakai `EducationSummary` / `EducationDetail` di bawah.
  */
 export type EducationContent = {
   id: string;
@@ -103,4 +119,27 @@ export type EducationContent = {
   authorName: string;
   createdAt: string;
   updatedAt: string;
+};
+
+/**
+ * Satu item dari `GET /api/v1/public/education`
+ * (`toPublicEducationSummaryDto`). Hanya konten PUBLISHED yang dikirim.
+ */
+export type EducationSummary = {
+  id: string;
+  title: string;
+  slug: string;
+  category: string | null;
+  imageUrl: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+/**
+ * Satu item dari `GET /api/v1/public/education/:slug`
+ * (`toPublicEducationDetailDto`).
+ */
+export type EducationDetail = EducationSummary & {
+  /** Teks biasa; paragraf dipisah baris kosong. */
+  content: string;
 };
