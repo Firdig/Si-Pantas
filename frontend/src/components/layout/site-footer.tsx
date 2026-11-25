@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { footer } from "@/lib/mock/beranda";
+import { footer } from "@/lib/mock/warga/beranda";
 
 export function SiteFooter() {
   return (

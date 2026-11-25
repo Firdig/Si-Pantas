@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { CategoryCard } from "@/components/edukasi/category-card";
-import { TipsBanner } from "@/components/edukasi/tips-banner";
+import { CategoryCard } from "@/components/warga/edukasi/category-card";
+import { TipsBanner } from "@/components/warga/edukasi/tips-banner";
 import { PageHeader } from "@/components/ui/page-header";
-import { getDaftarEdukasi } from "@/lib/edukasi";
-import { cariPanduanLengkap, susunKartuKategori } from "@/lib/edukasi-kategori";
+import { getEdukasiByKategori, getEdukasiBySlug, KATEGORI_EDUKASI } from "@/lib/mock/warga/edukasi";
 
 export const metadata: Metadata = {
   title: "Pusat Edukasi Pemilahan Sampah — SI-PANTAS",

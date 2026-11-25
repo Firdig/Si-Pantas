@@ -6,8 +6,8 @@ import { Card } from "@/components/ui/card";
 import { SelectField } from "@/components/ui/select-field";
 import { reportStatusDisplay } from "@/lib/status";
 import type { ReportStatus } from "@/types/api";
-import { ReportCard, type ReportView } from "@/components/status/report-card";
-import { StatusLegend } from "@/components/status/status-legend";
+import { ReportCard, type ReportView } from "@/components/warga/status/report-card";
+import { StatusLegend } from "@/components/warga/status/status-legend";
 
 type PointOption = {
   id: string;

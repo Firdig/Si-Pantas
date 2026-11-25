@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { MapPanel } from "@/components/peta/map-panel";
-import { PointCard } from "@/components/peta/point-card";
+import { MapPanel } from "@/components/warga/peta/map-panel";
+import { PointCard } from "@/components/warga/peta/point-card";
 import type { WastePoint } from "@/types/api";
 
 export type PointView = WastePoint & {

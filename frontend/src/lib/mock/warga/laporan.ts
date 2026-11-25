@@ -1,5 +1,5 @@
 import type { Report } from "@/types/api";
-import { titikSampah } from "@/lib/mock/titik";
+import { titikSampah } from "@/lib/mock/warga/titik";
 
 const titik1 = titikSampah[0]!;
 const titik2 = titikSampah[1]!;

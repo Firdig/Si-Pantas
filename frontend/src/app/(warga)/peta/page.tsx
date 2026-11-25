@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { PetaExplorer } from "@/components/peta/peta-explorer";
+import { PetaExplorer } from "@/components/warga/peta/peta-explorer";
 import { PageHeader } from "@/components/ui/page-header";
 import { formatRelativeDay } from "@/lib/format";
-import { MOCK_NOW, titikSampah } from "@/lib/mock/titik";
+import { MOCK_NOW, titikSampah } from "@/lib/mock/warga/titik";
 
 export const metadata: Metadata = {
   title: "Peta Titik Sampah — SI-PANTAS",

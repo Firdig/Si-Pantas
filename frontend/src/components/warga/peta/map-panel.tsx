@@ -1,4 +1,4 @@
-import { SampahMap } from "@/components/peta/sampah-map";
+import { SampahMap } from "@/components/warga/peta/sampah-map";
 import type { WastePoint } from "@/types/api";
 
 type MapPanelProps = {

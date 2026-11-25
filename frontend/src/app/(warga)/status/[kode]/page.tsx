@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ReportTimeline } from "@/components/status/report-timeline";
+import { ReportTimeline } from "@/components/warga/status/report-timeline";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/page-header";
 import { formatDayTimeWib, formatTimeWib } from "@/lib/format";
-import { getLaporanByKode, laporanSampah } from "@/lib/mock/laporan";
-import { MOCK_NOW } from "@/lib/mock/titik";
+import { getLaporanByKode, laporanSampah } from "@/lib/mock/warga/laporan";
+import { MOCK_NOW } from "@/lib/mock/warga/titik";
 import {
   reportStatusAdvice,
   reportStatusDisplay,

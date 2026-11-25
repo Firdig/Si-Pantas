@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { navItems } from "@/lib/mock/beranda";
+import { navItems } from "@/lib/mock/warga/beranda";
 
 /** Ikon sederhana per menu, memakai garis 24×24. */
 const menuIcons: Record<string, ReactNode> = {
