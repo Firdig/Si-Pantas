@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { ringkasan } from "@/lib/mock/beranda";
+import { ringkasan } from "@/lib/mock/warga/beranda";
 
 export function SummaryCard() {
   return (

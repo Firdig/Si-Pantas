@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { formatDateShort, formatDateTimeShort } from "@/lib/format";
-import { edukasiPublik, getEdukasiBySlug } from "@/lib/mock/edukasi";
+import { edukasiPublik, getEdukasiBySlug } from "@/lib/mock/warga/edukasi";
 
 export const instant = false;
 

@@ -1,6 +1,6 @@
-import { EducationBanner } from "@/components/beranda/education-banner";
-import { Hero } from "@/components/beranda/hero";
-import { SummaryCard } from "@/components/beranda/summary-card";
+import { EducationBanner } from "@/components/warga/beranda/education-banner";
+import { Hero } from "@/components/warga/beranda/hero";
+import { SummaryCard } from "@/components/warga/beranda/summary-card";
 
 export default function BerandaPage() {
   return (

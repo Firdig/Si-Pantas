@@ -44,15 +44,19 @@ Catatan:
 ## Struktur
 
 ```
-src/app/(publik)/        halaman warga
+src/app/(warga)/          halaman warga (URL di akar situs)
   page.tsx               Beranda
   peta/                  Peta Titik Sampah + detail titik
   status/                Status & Laporan Warga + detail laporan
   edukasi/               Pusat Edukasi + artikel
   bantuan/               Kontak RW XI + tombol WhatsApp
+  privasi/               Kebijakan privasi
+src/app/operator/        area operator (URL /operator)
+src/app/tps/             tugas TPS berbasis token (URL /tps/[token])
 src/components/ui/       komponen dasar (Button, Badge, Card, dst.)
-src/components/          komponen per halaman (beranda, peta, status, edukasi)
-src/lib/mock/            data contoh
+src/components/layout/   kerangka halaman (header, footer, ComingSoon)
+src/components/warga/    komponen isi halaman warga
+src/lib/mock/warga/      data contoh halaman warga
 src/lib/status.ts        label & warna status (satu sumber)
 src/types/api.ts         draf kontrak API untuk backend
 ```
@@ -68,9 +72,11 @@ src/types/api.ts         draf kontrak API untuk backend
 | `/bantuan` | Kontak pengurus RW XI + tombol WhatsApp |
 | `/privasi` | Masih halaman sementara |
 | `/kontak` | Dialihkan (redirect) ke `/bantuan` |
+| `/operator` | Kerangka area operator (masih placeholder) |
+| `/tps/[token]` | Kerangka tugas TPS (masih placeholder) |
 
 ## Data
 
-Semua data masih **mock** di `src/lib/mock/` dan mengikuti bentuk di
+Semua data masih **mock** di `src/lib/mock/warga/` dan mengikuti bentuk di
 `src/types/api.ts`. Saat API Express siap, ganti sumber data di halaman —
 komponen tidak perlu diubah.

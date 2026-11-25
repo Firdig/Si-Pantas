@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
-import { hero } from "@/lib/mock/beranda";
+import { hero } from "@/lib/mock/warga/beranda";
 
 export function Hero() {
   return (

@@ -5,7 +5,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/page-header";
 import { formatRelativeDay } from "@/lib/format";
-import { getTitikById, MOCK_NOW, titikSampah } from "@/lib/mock/titik";
+import { getTitikById, MOCK_NOW, titikSampah } from "@/lib/mock/warga/titik";
 import { pointConditionDisplay } from "@/lib/status";
 
 /**

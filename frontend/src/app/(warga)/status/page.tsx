@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { StatusExplorer } from "@/components/status/status-explorer";
+import { StatusExplorer } from "@/components/warga/status/status-explorer";
 import { PageHeader } from "@/components/ui/page-header";
 import { formatDayTimeWib } from "@/lib/format";
-import { laporanSampah } from "@/lib/mock/laporan";
-import { MOCK_NOW, titikSampah } from "@/lib/mock/titik";
+import { laporanSampah } from "@/lib/mock/warga/laporan";
+import { MOCK_NOW, titikSampah } from "@/lib/mock/warga/titik";
 
 export const metadata: Metadata = {
   title: "Status & Laporan Warga — SI-PANTAS",
