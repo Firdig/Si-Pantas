@@ -3,15 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { formatDateShort, formatDateTimeShort } from "@/lib/format";
-import { edukasiPublik, getEdukasiBySlug } from "@/lib/mock/warga/edukasi";
+import { getEdukasiBySlug } from "@/lib/edukasi";
 
 export const instant = false;
-
-export async function generateStaticParams() {
-  const artikel = await getDaftarEdukasi();
-
-  return artikel.map((item) => ({ slug: item.slug }));
-}
 
 export async function generateMetadata({
   params,
