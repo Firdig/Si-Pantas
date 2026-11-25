@@ -42,6 +42,6 @@ export const footer = {
   tagline: "Sistem Informasi Pemantauan Sampah · RW XI Kelurahan Temas",
   links: [
     { label: "Privasi Pelapor", href: "/privasi" },
-    { label: "Kontak RW", href: "/kontak" },
+    { label: "Kontak RW", href: "/bantuan" },
   ],
 };

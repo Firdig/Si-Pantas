@@ -15,6 +15,17 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  // /kontak isinya sama dengan /bantuan, jadi disatukan. 307 (sementara)
+  // dipakai agar mudah diubah lagi tanpa terlanjur tersimpan di cache browser.
+  async redirects() {
+    return [
+      {
+        source: "/kontak",
+        destination: "/bantuan",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

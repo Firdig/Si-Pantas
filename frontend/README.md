@@ -49,6 +49,7 @@ src/app/(publik)/        halaman warga
   peta/                  Peta Titik Sampah + detail titik
   status/                Status & Laporan Warga + detail laporan
   edukasi/               Pusat Edukasi + artikel
+  bantuan/               Kontak RW XI + tombol WhatsApp
 src/components/ui/       komponen dasar (Button, Badge, Card, dst.)
 src/components/          komponen per halaman (beranda, peta, status, edukasi)
 src/lib/mock/            data contoh
@@ -64,7 +65,9 @@ src/types/api.ts         draf kontrak API untuk backend
 | `/peta` · `/peta/[id]` | Peta titik + detail titik |
 | `/status` · `/status/[kode]` | Daftar laporan + timeline status |
 | `/edukasi` · `/edukasi/[slug]` | Pusat edukasi + artikel |
-| `/bantuan`, `/privasi`, `/kontak` | Masih halaman sementara |
+| `/bantuan` | Kontak pengurus RW XI + tombol WhatsApp |
+| `/privasi` | Masih halaman sementara |
+| `/kontak` | Dialihkan (redirect) ke `/bantuan` |
 
 ## Data
 
